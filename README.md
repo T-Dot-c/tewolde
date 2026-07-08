@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Tewolde's Portfolio
 
-# Run and deploy your AI Studio app
+A high-fidelity, single-page portfolio built using a modern frontend stack. The application features a premium monochrome/amber-toned glassmorphism aesthetic, custom animations, a full-lifecycle development narrative, and a secure interactive terminal console.
 
-This contains everything you need to run your app locally.
+## 💻 Getting Started
 
-View your app in AI Studio: https://ai.studio/apps/6190b66e-63a1-4579-b1e6-0eb67eb8cce9
+Follow these instructions to run and test the project locally.
 
-## Run Locally
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
 
-**Prerequisites:**  Node.js
+### Installation
+Clone this repository and install all dependencies:
+```bash
+# Clone the repository
+git clone https://github.com/T-Dot-c/tewolde.git
 
+# Navigate into the project directory
+cd tewolde
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+# Install packages
+npm install
+```
+
+### Running Locally
+To launch the Vite development server locally:
+```bash
+npm run dev
+```
+### Building for Production
+To bundle and optimize the project assets for deployment:
+```bash
+npm run build
+```
+This produces a static output directory in `dist/`.
+
+---
+
+## 🌐 Deployment
+This portfolio website is connected to GitHub and version-tracked on the branch `main`. Any modifications pushed to the remote repository can easily be set up to deploy automatically via Vercel, Netlify, or self-hosted Ubuntu/LAMP stacks.
