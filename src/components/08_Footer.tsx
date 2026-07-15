@@ -1,46 +1,12 @@
-import { ChevronUp } from "lucide-react";
-
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <footer className="w-full py-16 bg-[#f5f5f7] border-t border-zinc-200">
-      <div className="flex flex-col md:flex-row justify-between items-center max-w-[1200px] mx-auto px-6 space-y-8 md:space-y-0">
-        <div className="space-y-2 text-center md:text-left">
-          <div className="font-headline-md text-xl font-bold text-[#050507] font-display">Tewolde</div>
-          <p className="font-body-md text-xs font-mono text-zinc-500 tracking-widest uppercase">
-            Designing. Developing. Deploying.
-          </p>
-          <p className="font-body-md text-xs text-zinc-400 mt-1">
-            © 2026 Tewolde Lisanwork Mekonnen. Software Engineer.
-          </p>
+    <footer className="w-full py-8 bg-cream border-t border-token-border">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left font-sans text-xs text-muted-foreground/75">
+        <div>
+          © 2026 Tewolde Lisanwork Mekonnen
         </div>
-
-        <div className="flex gap-8 items-center font-label-sm text-xs uppercase tracking-wider">
-          <button
-            onClick={scrollToTop}
-            className="text-zinc-600 hover:text-black transition-colors flex items-center gap-1 font-bold cursor-pointer"
-          >
-            Back to Top <ChevronUp className="w-3.5 h-3.5" />
-          </button>
-          <a
-            className="text-zinc-600 hover:text-black transition-colors font-bold"
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <a
-            className="text-zinc-600 hover:text-black transition-colors font-bold"
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
+        <div className="font-mono text-[11px] tracking-wider uppercase">
+          Updated July 7, 2026
         </div>
       </div>
     </footer>

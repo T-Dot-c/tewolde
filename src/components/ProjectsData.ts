@@ -236,26 +236,134 @@ export const PROJECTS: Project[] = [
     id: "abed-dermatology",
     title: "Abed Dermatology & Venereology Specialty Clinic",
     category: "Web Development",
-    tags: ["wordpress", "php", "css3"],
-    description: "A comprehensive healthcare website featuring structured medical services, doctor profiles, patient resources, and a fully responsive design.",
+    tags: ["wordpress", "php", "css3", "healthcare-tech", "responsive-design"],
+    description: "A specialized healthcare platform for a premier dermatology clinic in Addis Ababa, featuring service taxonomies (medical, surgical, aesthetic), doctor profiles, appointment booking integration, multi-location management, and clinical resource sections.",
     image: "/projects/abed-1.jpg",
-    images: ["/projects/abed-1.jpg", "/projects/abed-2.jpg"],
-    link: "https://abedclinic.com",
+    images: ["/projects/abed-1.jpg", "/projects/abed-2.jpg", "/projects/abed-3.jpg"],
+    link: "https://abeddermatology.com",
     github: "",
-    challenge: "",
-    solution: "",
-    outcomes: [],
-    techStack: ["wordpress", "php", "css3"],
-    techRationale: {},
-    timeline: "",
-    role: "",
-    architectureModules: [],
-    detailedOutcomes: [],
-    keyBenefits: [],
-    technicalLogs: [],
-    engineeringProcess: [],
-    uiPreview: undefined,
-    sidebarStatusChips: []
+    challenge: "Modernizing the clinic's digital presence to handle diverse service categories, showcase clinical expertise, and synchronize operational data across multiple physical branches while ensuring HIPAA-aligned user accessibility.",
+    solution: "Developed a robust, responsive WordPress-based architecture utilizing custom post types for doctors, services, and locations. Implemented a clean, high-contrast aesthetic interface with integrated scheduling calls-to-action and optimized content delivery for medical insights.",
+    outcomes: [
+        "Streamlined patient inquiries through centralized appointment booking CTA integration.",
+        "Increased accessibility of specialized dermatological services through clear, categorized navigation.",
+        "Improved brand credibility via professional medical team profiles and integrated clinical blog insights."
+    ],
+    techStack: ["wordpress", "php", "css3", "javascript"],
+    techRationale: {
+        "wordpress": "Flexible content management for frequent clinical updates, blog maintenance, and service taxonomy.",
+        "php": "Server-side processing for secure form handling and dynamic page templating.",
+        "css3": "Custom styling for responsive, mobile-first design and consistent clinic branding across devices."
+    },
+    timeline: "2026",
+    role: "Lead Developer",
+    architectureModules: [
+        {
+            name: "Service Taxonomy",
+            purpose: "Manage structured clinical service categories.",
+            responsibilities: ["Ensure clear hierarchy", "Categorize General, Surgical, Phototherapy, Laser, Cosmetic services"],
+            inputsOutputs: "Inputs: Admin configurations. Outputs: Structured frontend taxonomy."
+        },
+        {
+            name: "Multi-Location Branch Manager",
+            purpose: "Synchronize operational data for distinct clinic locations (Betel & Bisrate Gabriel).",
+            responsibilities: ["Manage location specific data", "Handle distinct business hours"],
+            inputsOutputs: "Inputs: Branch specifics. Outputs: Consistent location-based routing."
+        },
+        {
+            name: "Expert Profile System",
+            purpose: "Structure professional clinical team profiles.",
+            responsibilities: ["Display credentials", "Link experts to relevant service taxonomies"],
+            inputsOutputs: "Inputs: Doctor details. Outputs: Professional directory."
+        },
+        {
+            name: "Clinical Insights/Blog Engine",
+            purpose: "Integrate professional medical insights and articles.",
+            responsibilities: ["Content delivery", "SEO optimization"],
+            inputsOutputs: "Inputs: Markdown/Rich text. Outputs: Patient educational resources."
+        },
+        {
+            name: "Appointment Scheduling Integration",
+            purpose: "Streamline patient booking natively on the platform.",
+            responsibilities: ["Centralized booking CTA management", "Direct routing to clinic contact points"],
+            inputsOutputs: "Inputs: Patient inquiries. Outputs: Automated scheduling pipelines."
+        }
+    ],
+    detailedOutcomes: [
+        {
+            problem: "Legacy clinic information was scattered and unsearchable.",
+            result: "Migrated legacy data into a structured, user-friendly digital catalog.",
+            measurement: "100% catalog availability for service taxonomies."
+        },
+        {
+            problem: "Low online footprint for highly specialized clinical services in the region.",
+            result: "Enhanced local SEO visibility for dermatology and aesthetic services in Addis Ababa.",
+            measurement: "Improved digital accessibility and organic reach."
+        },
+        {
+            problem: "Design did not adequately communicate professional clinic credibility.",
+            result: "Implemented rigorous, high-contrast design standards focused on patient comfort.",
+            measurement: "Increased brand credibility and perceived trust."
+        }
+    ],
+    keyBenefits: [
+        "Centralized patient information management.",
+        "Scalable architecture allowing for the addition of new clinic branches or service lines.",
+        "Direct patient-to-clinic communication channel via optimized contact endpoints."
+    ],
+    technicalLogs: [
+        {
+            capability: "Data Architecture Refactoring",
+            tags: ["WordPress CPTs", "Data Modeling"],
+            implementations: [
+                "Refactored custom post types for clinical services to ensure clear hierarchy."
+            ],
+            designDecisions: [
+                "Utilized decoupled metadata structuring for service categories."
+            ],
+            verification: [
+                "Verified accurate relational mapping between nested services."
+            ]
+        },
+        {
+            capability: "Frontend Performance Optimization",
+            tags: ["Performance", "Media Optimization"],
+            implementations: [
+                "Optimized frontend performance for fast loading of image-heavy aesthetic galleries."
+            ],
+            designDecisions: [
+                "Lazy-loaded high-resolution medical imagery to prevent primary render blocking."
+            ],
+            verification: [
+                "Confirmed fast LCP (Largest Contentful Paint) metrics under heavily loaded gallery pages."
+            ]
+        },
+        {
+            capability: "Operational Synchronization",
+            tags: ["Business Logic", "Multi-Tenant"],
+            implementations: [
+                "Configured specific business hour management for distinct clinic locations."
+            ],
+            designDecisions: [
+                "Abstracted location details to a singular management source for scalability."
+            ],
+            verification: [
+                "Validated proper business hours display across distinct endpoints."
+            ]
+        }
+    ],
+    engineeringProcess: [
+        "Requirement gathering and clinical taxonomy mapping.",
+        "UI/UX prototyping focused on patient-centered navigation.",
+        "CMS environment configuration and theme customization.",
+        "Deployment and branch-specific operational configuration."
+    ],
+    uiPreview: {
+        image: "/projects/abed-1.jpg",
+        caption: "Clinical interface dashboard",
+        description: "A clean, clinical aesthetic utilizing professional typography and high-contrast imagery to build patient trust."
+    },
+    sidebarStatusChips: ["Live", "Healthcare", "Specialized"]
   },
   {
     id: "yarc-system",

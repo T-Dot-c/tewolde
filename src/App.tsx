@@ -11,6 +11,7 @@ import Toast, { ToastMessage } from "./components/12_Toast";
 import IntroPreloader from "./components/01_IntroPreloader";
 import Navigation from "./components/02_Navigation";
 import Hero from "./components/03_Hero";
+import SelectedWork from "./components/0301_SelectedWork";
 import About from "./components/04_About";
 import Work from "./components/05_Work";
 import Specialties from "./components/06_Specialties";
@@ -166,7 +167,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#f5f5f7] min-h-screen text-[#050507] font-sans antialiased relative selection:bg-black/10 selection:text-black">
+    <div className="bg-cream min-h-screen text-ink font-sans antialiased relative selection:bg-ember/20 selection:text-ink">
       {/* Intro Preloader Screen */}
       <IntroPreloader showIntro={showIntro} introStep={introStep} />
 
@@ -183,6 +184,9 @@ export default function App() {
         <main>
           {/* Hero Section */}
           <Hero />
+
+          {/* Selected Work Section */}
+          <SelectedWork onSelectProject={setSelectedProject} />
 
           {/* About Section */}
           <About />
