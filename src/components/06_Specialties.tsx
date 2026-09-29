@@ -6,7 +6,7 @@ export default function Specialties() {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
 
   return (
-    <section className="py-24 md:py-32 px-6 bg-zinc-100 border-t border-zinc-200" id="services">
+    <section className="py-24 md:py-32 px-6 bg-white border-t border-zinc-200" id="services">
       <div className="max-w-[1200px] mx-auto space-y-16">
         <div className="border-t border-black pt-3 flex justify-between items-center mb-16">
           <span className="text-[11px] font-extrabold tracking-[0.25em] text-black uppercase font-mono">
@@ -23,7 +23,7 @@ export default function Specialties() {
                 key={service.id}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
-                className="group relative glass-card-interactive p-8 rounded-2xl border border-zinc-200 bg-zinc-50 hover:border-black/30 transition-all duration-300 overflow-hidden flex flex-col justify-between h-[380px]"
+                className="group relative glass-card-interactive p-8 rounded-2xl border border-zinc-200 bg-white hover:border-black/30 transition-all duration-300 overflow-hidden flex flex-col justify-between h-[380px]"
               >
                 {/* Main Content (fades on hover) */}
                 <div className="transition-all duration-300 group-hover:opacity-0 group-hover:scale-95 flex flex-col h-full justify-between text-center">
@@ -41,7 +41,7 @@ export default function Specialties() {
                 </div>
 
                 {/* Tags Hover Overlay (slides up on hover) */}
-                <div className="absolute inset-0 bg-[#f5f5f7]/98 p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out flex flex-col justify-center z-20 border border-zinc-200 rounded-2xl backdrop-blur-xl text-left">
+                <div className="absolute inset-0 bg-white/98 p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out flex flex-col justify-center z-20 border border-zinc-200 rounded-2xl backdrop-blur-xl text-left">
                   <div className="text-[10px] font-mono text-black mb-4 uppercase tracking-[0.2em] border-b border-zinc-200 pb-2 font-bold">
                     Technical Stack
                   </div>
@@ -95,7 +95,7 @@ export default function Specialties() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {WORKFLOW_STEPS.map((item) => (
-              <div key={item.step} className="glass-card p-6 rounded-2xl border border-zinc-200 bg-zinc-50 hover:border-black/20 transition-all duration-300 relative group">
+              <div key={item.step} className="glass-card p-6 rounded-2xl border border-zinc-200 bg-white hover:border-black/20 transition-all duration-300 relative group">
                 <span className="font-mono text-3xl font-extrabold text-black/10 group-hover:text-black/25 transition-colors duration-300">
                   0{item.step}
                 </span>

@@ -29,6 +29,13 @@ export default function SelectedWork({ onSelectProject }: SelectedWorkProps) {
       displayTitle: "Y Arc System PLC",
       desc: "A corporate business site presenting company services through an easy-to-manage, professional platform.",
       year: "2025"
+    },
+    {
+      number: "04",
+      id: "trh-construction",
+      displayTitle: "TRH Construction & Trading",
+      desc: "A construction and trading company website built around six service areas and a photo-led project portfolio, designed to show the work with clarity and confidence.",
+      year: "2026"
     }
   ];
 
@@ -40,10 +47,10 @@ export default function SelectedWork({ onSelectProject }: SelectedWorkProps) {
   };
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 35 },
+    initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-80px" },
-    transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }
+    viewport: { once: true, margin: "-20px" },
+    transition: { duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }
   };
 
   return (

@@ -1,80 +1,179 @@
-import { motion } from "framer-motion";
-import { TypeAnimation } from 'react-type-animation';
-import { ArrowRight, Mail } from "lucide-react";
+import { useState, useRef, useEffect, useCallback, PointerEvent, CSSProperties } from "react";
 
 export default function Hero() {
+  const [sliderPos, setSliderPos] = useState<number>(100);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const isPointerDownRef = useRef<boolean>(false);
+
+  const updatePosition = useCallback((val: number) => {
+    const clamped = Math.max(0, Math.min(100, val));
+    setSliderPos(clamped);
+    if (stageRef.current) {
+      stageRef.current.style.setProperty("--x", `${clamped}%`);
+    }
+  }, []);
+
+  // Intro sweep animation: sketch to live (100% down to 38%)
+  useEffect(() => {
+    updatePosition(100);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let t0: number | null = null;
+      const targetPos = 38;
+      let animId: number;
+
+      const step = (t: number) => {
+        if (isPointerDownRef.current) return;
+        if (t0 === null) t0 = t + 350;
+        const p = Math.min(1, Math.max(0, (t - t0) / 1400));
+        // Cubic ease-out curve
+        const eased = 100 - (100 - targetPos) * (1 - Math.pow(1 - p, 3));
+        updatePosition(eased);
+        if (p < 1) {
+          animId = requestAnimationFrame(step);
+        }
+      };
+
+      animId = requestAnimationFrame(step);
+      return () => cancelAnimationFrame(animId);
+    } else {
+      updatePosition(38);
+    }
+  }, [updatePosition]);
+
+  const handlePointerAt = (clientX: number) => {
+    if (!stageRef.current) return;
+    const rect = stageRef.current.getBoundingClientRect();
+    const percent = ((clientX - rect.left) / rect.width) * 100;
+    updatePosition(percent);
+  };
+
+  const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    isPointerDownRef.current = true;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    handlePointerAt(e.clientX);
+  };
+
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (isPointerDownRef.current) {
+      handlePointerAt(e.clientX);
+    }
+  };
+
+  const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    isPointerDownRef.current = false;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      // Ignore if pointer capture was already released
+    }
+  };
+
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-32"
+      className="hero-wrapper relative min-h-screen pt-24 md:pt-28 pb-12 px-4 md:px-8 border-b border-token-border"
       id="hero"
     >
-      <div className="relative z-10 max-w-[1200px] mx-auto text-center space-y-8">
+      <div className="hero-grid">
+        {/* Left Column: Headline, Bio & CTAs */}
+        <div>
+          <h1 className="hero-title">
+            Websites,
+            <span>sketch to live.</span>
+          </h1>
 
-        {/* Main Heading: Typewriter Effect */}
-        <h1 className="font-display-xl-mobile md:font-display-xl text-5xl md:text-7xl max-w-4xl mx-auto text-[#050507] tracking-tight leading-[1.1] min-h-[2.2em] md:min-h-[2em] flex flex-col items-center justify-center">
-          <TypeAnimation
-            sequence={[
-              'Building Complete\n Web Solutions.',
-              2000,
-              '',
-              1000,
-            ]}
-            wrapper="span"
-            speed={55}
-            // Setting repeat to Infinity makes it loop forever
-            repeat={Infinity}
-            style={{ whiteSpace: 'pre-line', display: 'inline-block' }}
-          />
-        </h1>
+          <p className="hero-sub">
+            I'm Tewolde, a web developer. I design the pages, build them in React or WordPress, and ship them so your customers can use them.
+          </p>
 
-        {/* Body Paragraph: Adjusted delay to wait for typing sequence to finish */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }} // Starts lower and invisible
-          animate={{ opacity: 1, y: 0 }}   // Slides up and fades in
-          transition={{
-            duration: 1.0,
-            delay: 3.0, // Triggers once the heading typing sequence finishes
-            ease: [0.21, 0.47, 0.32, 0.98]
-          }}
-          className="font-body-lg text-lg text-zinc-600 max-w-3xl mx-auto leading-relaxed"
-        >
-          I build end-to-end web products — from UI design to cloud deployment — combining frontend development, DevOps practices, and AI-assisted workflows to deliver scalable, user-centered solutions.
-        </motion.p>
+          <div className="hero-cta">
+            <a className="hero-btn main" href="#work">
+              See my work
+            </a>
+            <a className="hero-btn" href="#contact">
+              Start a project
+            </a>
+          </div>
 
-        {/* CTA Buttons: We'll fade these in slightly after the paragraph for hierarchy */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 3.2, // Pushed back to appear after the paragraph slides up
-            ease: "easeOut"
-          }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
-        >
-          <motion.a
-            whileHover={{ scale: 1.05, y: -2, opacity: 0.8 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto bg-[#050507]/80 backdrop-blur-md border border-black/10 text-white px-2 py-2 pr-6 rounded-full font-body-md text-sm shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex justify-center items-center gap-3 cursor-pointer transition-colors hover:bg-black"
-            href="#work"
-          >
-            <motion.div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center" whileHover={{ x: 8 }} whileTap={{ x: 4 }}>
-              <ArrowRight className="w-5 h-5 text-white" />
-            </motion.div>
-            Explore My Work
-          </motion.a>
-          <motion.a
-            whileHover={{ scale: 1.05, y: -2, opacity: 0.8 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto bg-black/5 backdrop-blur-md border border-black/10 text-[#050507] px-2 py-2 pr-6 rounded-full font-body-md text-sm flex justify-center items-center gap-3 cursor-pointer transition-colors hover:bg-black/10"
-            href="#contact"
-          >
-            <motion.div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center" whileHover={{ x: 8 }} whileTap={{ x: 4 }}>
-              <Mail className="w-5 h-5 text-[#050507]" />
-            </motion.div>
-            Get In Touch
-          </motion.a>
-        </motion.div>
+
+        </div>
+
+        {/* Right Column: Interactive Comparison Stage */}
+        <section aria-label="Sketch to finished site comparison">
+          <div className="hero-frame">
+            {/* Browser Mockup Top Bar */}
+            <div className="hero-bar">
+              <i />
+              <i />
+              <i />
+              <em>abed-dermatology.example</em>
+            </div>
+
+            {/* Split Screen Stage */}
+            <div
+              ref={stageRef}
+              className="hero-stage"
+              id="stage"
+              style={{ "--x": `${sliderPos}%` } as CSSProperties}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            >
+              {/* Underneath Wireframe / Sketch Layer */}
+              <div className="hero-layer hero-wire" aria-hidden="true">
+                <div className="hero-wire-nav">
+                  <span>logo</span>
+                  <span>services · about · book</span>
+                </div>
+                <div className="hero-wire-big">headline + one clear action</div>
+                <div className="hero-wire-row">
+                  <div>service</div>
+                  <div>service</div>
+                  <div>service</div>
+                </div>
+              </div>
+
+              {/* Overlaid Live Finished Product Layer (Clipped by --x) */}
+              <div className="hero-layer hero-live">
+                <div className="hero-live-nav">
+                  <span className="hero-live-logo">Abed Skin</span>
+                  <span>Services &nbsp; About &nbsp; Book</span>
+                </div>
+                <h2>Clear skin starts with a plan.</h2>
+                <p>Book a visit in two taps and see a doctor this week.</p>
+                <span className="hero-live-btn">Book a visit</span>
+                <div className="hero-live-img" />
+                <div className="hero-live-row">
+                  <span>Acne care</span>
+                  <span>Laser</span>
+                  <span>Kids</span>
+                </div>
+              </div>
+
+              {/* Draggable Divider Handle */}
+              <div className="hero-handle" />
+
+              {/* Floating Pill Labels */}
+              <span className="hero-tag l">Live</span>
+              <span className="hero-tag r">Sketch</span>
+            </div>
+
+            {/* Range Slider Controller */}
+            <input
+              className="hero-range"
+              type="range"
+              min="0"
+              max="100"
+              value={Math.round(sliderPos)}
+              onChange={(e) => updatePosition(Number(e.target.value))}
+              aria-label="Compare finished site and sketch"
+            />
+          </div>
+
+          <p className="hero-cap">
+            Drag across the page to move between the sketch and the finished site.
+          </p>
+        </section>
       </div>
     </section>
   );

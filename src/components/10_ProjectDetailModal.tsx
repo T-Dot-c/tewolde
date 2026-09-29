@@ -312,7 +312,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-x-0 bottom-0 z-50 h-[96vh] bg-[#f5f5f7] rounded-t-3xl overflow-hidden flex flex-col shadow-[0_-12px_60px_rgba(5,5,7,0.18)]"
+            className="fixed inset-x-0 bottom-0 z-50 h-[96vh] bg-white rounded-t-3xl overflow-hidden flex flex-col shadow-[0_-12px_60px_rgba(5,5,7,0.18)]"
           >
             {/* ── TOP CHROME BAR ── */}
             <div className="shrink-0 flex items-center justify-center pt-3 pb-1">

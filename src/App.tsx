@@ -1,5 +1,4 @@
-import { useState, useEffect, FormEvent, MouseEvent } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 import { PROJECTS } from "./components/ProjectsData";
 import { Project, ContactMessage } from "./types";
@@ -8,15 +7,16 @@ import TerminalConsole from "./components/11_TerminalConsole";
 import Toast, { ToastMessage } from "./components/12_Toast";
 
 // Refactored modular subcomponents
-import IntroPreloader from "./components/01_IntroPreloader";
 import Navigation from "./components/02_Navigation";
 import Hero from "./components/03_Hero";
 import SelectedWork from "./components/0301_SelectedWork";
 import About from "./components/04_About";
+import LiveDemos from "./components/0401_LiveDemos";
 import Work from "./components/05_Work";
 import Specialties from "./components/06_Specialties";
 import Contact from "./components/07_Contact";
 import Footer from "./components/08_Footer";
+import Blog from "./components/Blog";
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -26,40 +26,8 @@ export default function App() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  // Intro preloader state
-  const [showIntro, setShowIntro] = useState(true);
-  const [introStep, setIntroStep] = useState(0);
+  const [isBlogOpen, setIsBlogOpen] = useState(false);
 
-  useEffect(() => {
-    if (!showIntro) return;
-    const interval = setInterval(() => {
-      setIntroStep((prev) => prev + 1);
-    }, 700);
-    return () => clearInterval(interval);
-  }, [showIntro]);
-
-  useEffect(() => {
-    // Disable scroll during intro
-    if (showIntro) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    const timer = setTimeout(() => {
-      setShowIntro(false);
-    }, 2400);
-    return () => {
-      document.body.style.overflow = "unset";
-      clearTimeout(timer);
-    };
-  }, [showIntro]);
-
-  // Contact Form States
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [messageText, setMessageText] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Load message logs from local storage
   useEffect(() => {
@@ -73,28 +41,41 @@ export default function App() {
     }
   }, []);
 
-  // Scroll spy to update current section
+  // Throttled scroll listener — only for nav background (no layout reads)
   useEffect(() => {
+    let rafId: number;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-      const sections = ["hero", "about", "work", "services", "contact"];
-      const scrollPos = window.scrollY + 200;
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.clientHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20);
+      });
     };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  // IntersectionObserver-based scroll spy — zero layout thrashing
+  useEffect(() => {
+    const sections = ["hero", "about", "work", "services", "contact"];
+    const observers: IntersectionObserver[] = [];
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((obs) => obs.disconnect());
   }, []);
 
   // Toast helper
@@ -119,45 +100,7 @@ export default function App() {
     ? PROJECTS
     : PROJECTS.filter((p) => p.category === activeFilter || p.tags.includes(activeFilter));
 
-  // Handle message submission
-  const handleSubmitMessage = (e: FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim() || !messageText.trim()) {
-      addToast("Please fill in all form fields.", "info");
-      return;
-    }
 
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      const newMessage: ContactMessage = {
-        id: Math.random().toString(),
-        name: name.trim(),
-        email: email.trim(),
-        message: messageText.trim(),
-        timestamp: new Date().toLocaleString(),
-      };
-
-      const updated = [newMessage, ...messages];
-      setMessages(updated);
-      localStorage.setItem("portfolio_messages", JSON.stringify(updated));
-
-      // Reset form states
-      setName("");
-      setEmail("");
-      setMessageText("");
-      setIsSubmitting(false);
-
-      addToast("Message successfully sent! View console logs to review secure delivery.");
-    }, 1200);
-  };
-
-  // Copy portfolio link
-  const handleCopyLink = (e: MouseEvent) => {
-    e.preventDefault();
-    navigator.clipboard.writeText("tewolde1574@gmail.com");
-    addToast("Email copied to clipboard: tewolde1574@gmail.com", "info");
-  };
 
   // Clear contact messages local log
   const handleClearMessages = () => {
@@ -168,59 +111,55 @@ export default function App() {
 
   return (
     <div className="bg-cream min-h-screen text-ink font-sans antialiased relative selection:bg-ember/20 selection:text-ink">
-      {/* Intro Preloader Screen */}
-      <IntroPreloader showIntro={showIntro} introStep={introStep} />
-
-      {/* Main landing page content wrapper with dismissal curtain fade-in */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={showIntro ? { opacity: 0 } : { opacity: 1 }}
-        transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1] }}
-        className="w-full flex flex-col"
-      >
+      {/* Main landing page content wrapper */}
+      <div className="w-full flex flex-col">
         {/* Fixed Sticky Glassmorphic Header */}
-        <Navigation isScrolled={isScrolled} activeSection={activeSection} />
+        <Navigation
+          isScrolled={isScrolled}
+          activeSection={activeSection}
+          onBlogClick={() => setIsBlogOpen((v) => !v)}
+          isBlogOpen={isBlogOpen}
+        />
 
-        <main>
-          {/* Hero Section */}
-          <Hero />
+        {isBlogOpen ? (
+          <Blog />
+        ) : (
+          <>
+            <main>
+              {/* Hero Section */}
+              <Hero />
 
-          {/* Selected Work Section */}
-          <SelectedWork onSelectProject={setSelectedProject} />
+              {/* Selected Work Section */}
+              <SelectedWork onSelectProject={setSelectedProject} />
 
-          {/* About Section */}
-          <About />
+              {/* About Section */}
+              <About />
 
-          {/* Work Section */}
-          <Work
-            activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
-            filteredProjects={filteredProjects}
-            onSelectProject={setSelectedProject}
-          />
+              {/* Live Demos Section */}
+              <LiveDemos />
 
-          {/* Specialties & Workflow Section */}
-          <Specialties />
+              {/* Work Section */}
+              <Work
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+                filteredProjects={filteredProjects}
+                onSelectProject={setSelectedProject}
+              />
 
-          {/* Contact Section */}
-          <Contact
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            messageText={messageText}
-            setMessageText={setMessageText}
-            isSubmitting={isSubmitting}
-            onSubmit={handleSubmitMessage}
-            onCopyLink={handleCopyLink}
-            onOpenConsole={() => setIsConsoleOpen(true)}
-            messagesCount={messages.length}
-            onToastRequest={(text) => addToast(text, "info")}
-          />
-        </main>
+              {/* Specialties & Workflow Section */}
+              <Specialties />
 
-        {/* Footer */}
-        <Footer />
+              {/* Contact Section */}
+              <Contact
+                onOpenConsole={() => setIsConsoleOpen(true)}
+                messagesCount={messages.length}
+              />
+            </main>
+
+            {/* Footer */}
+            <Footer />
+          </>
+        )}
 
         {/* Drawer Overlay for Selected Project Details */}
         <ProjectDetailModal
@@ -238,7 +177,7 @@ export default function App() {
 
         {/* Toast Notification Container */}
         <Toast toasts={toasts} onClose={removeToast} />
-      </motion.div>
+      </div>
     </div>
   );
 }

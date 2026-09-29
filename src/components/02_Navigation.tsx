@@ -3,9 +3,11 @@ import { ArrowRight } from "lucide-react";
 interface NavigationProps {
   isScrolled: boolean;
   activeSection: string;
+  onBlogClick: () => void;
+  isBlogOpen: boolean;
 }
 
-export default function Navigation({ isScrolled, activeSection }: NavigationProps) {
+export default function Navigation({ isScrolled, activeSection, onBlogClick, isBlogOpen }: NavigationProps) {
   return (
     <nav className={`fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300 ${isScrolled
       ? "glass-nav"
@@ -21,15 +23,6 @@ export default function Navigation({ isScrolled, activeSection }: NavigationProp
         {/* Center Links */}
         <div className="hidden md:flex items-center gap-4 text-zinc-500 font-medium">
           <a
-            href="/13_Blog"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-black transition-colors hover:opacity-100"
-          >
-            Blog
-          </a>
-          <span className="opacity-20 text-zinc-400">/</span>
-          <a
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
@@ -39,13 +32,22 @@ export default function Navigation({ isScrolled, activeSection }: NavigationProp
           </a>
           <span className="opacity-20 text-zinc-400">/</span>
           <a
-            href="https://github.com"
+            href="https://github.com/T-Dot-c"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-black transition-colors hover:opacity-100"
           >
             GitHub
           </a>
+          <span className="opacity-20 text-zinc-400">/</span>
+          <button
+            onClick={onBlogClick}
+            className={`hover:text-black transition-colors hover:opacity-100 bg-none border-0 p-0 cursor-pointer font-medium ${
+              isBlogOpen ? "text-black" : ""
+            }`}
+          >
+            Blog
+          </button>
         </div>
 
         {/* Right Side Navigation */}

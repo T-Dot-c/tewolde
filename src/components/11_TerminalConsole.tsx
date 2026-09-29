@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, FormEvent } from "react";
-import { Terminal, Send, X, ShieldAlert, Cpu } from "lucide-react";
+import { Terminal, Send, X } from "lucide-react";
 import { ContactMessage } from "../types";
 
 interface TerminalConsoleProps {
@@ -49,7 +49,8 @@ export default function TerminalConsole({
           "  stack            - Technology stack",
           "  currently_building - Active projects",
           "  status           - Availability",
-          "  messages         - Contact form logs",
+          "  messages         - Contact logs",
+          "  clear_messages   - Clear message logs",
           "  clear            - Clear console"
         );
         break;
@@ -122,6 +123,10 @@ export default function TerminalConsole({
           });
         }
         break;
+      case "clear_messages":
+        onClearMessages();
+        newHistory.push("All stored messages cleared from local storage.");
+        break;
       case "clear":
         setHistory([]);
         setInput("");
@@ -139,7 +144,7 @@ export default function TerminalConsole({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
-      <div className="w-full max-w-xl bg-[#f5f5f7]/95 border border-zinc-200 text-[#050507] shadow-xl rounded-xl overflow-hidden font-mono flex flex-col h-[400px]">
+      <div className="w-full max-w-xl bg-white/95 border border-zinc-200 text-[#050507] shadow-xl rounded-xl overflow-hidden font-mono flex flex-col h-[400px]">
         {/* Terminal Header */}
         <div className="bg-black/5 px-4 py-3 border-b border-zinc-200 flex items-center justify-between">
           <div className="flex items-center gap-2">

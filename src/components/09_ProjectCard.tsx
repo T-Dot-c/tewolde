@@ -35,7 +35,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
       className="group glass-card-interactive rounded-xl overflow-hidden block cursor-pointer flex flex-col justify-between h-full"
     >
       <div>
-        <div className="aspect-video bg-zinc-100 flex items-center justify-center relative overflow-hidden p-0 border-b border-zinc-200">
+        <div className="aspect-video bg-white flex items-center justify-center relative overflow-hidden p-0 border-b border-zinc-200">
           <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:24px_24px]" />
 
           <AnimatePresence mode="wait">
@@ -125,7 +125,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           </div>
 
           {/* Tags Hover Overlay */}
-          <div className="absolute inset-0 bg-[#f5f5f7]/98 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out flex flex-col justify-center z-20 border border-zinc-200 rounded-xl backdrop-blur-xl">
+          <div className="absolute inset-0 bg-white/98 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out flex flex-col justify-center z-20 border border-zinc-200 rounded-xl backdrop-blur-xl">
             <div className="text-[10px] font-mono text-[#050507] mb-4 uppercase tracking-[0.2em] border-b border-zinc-200 pb-2 font-bold">
               Technical Stack
             </div>

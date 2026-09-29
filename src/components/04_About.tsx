@@ -7,10 +7,10 @@ export default function About() {
 
   // Animations configuration
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
-    transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }
+    viewport: { once: true, margin: "-20px" },
+    transition: { duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }
   };
 
   return (

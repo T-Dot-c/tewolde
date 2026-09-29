@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
       "https://images.unsplash.com/photo-1546410531-b8dec8fc3e31?q=80&w=2670&auto=format&fit=crop"
     ],
     link: "https://quiz.portfolio.design",
-    github: "https://github.com/ermiyashenok/quiz-application",
+    github: "https://github.com/T-Dot-c/quiz-application",
     challenge: "Students need an intuitive, fast, and stress-free way to practice exam questions, track progress, and review incorrect answers collaboratively.",
     solution: "Developed a modern React & TypeScript Single Page Application with interactive scoring, instant feedback loops, and local state management for quiz progression.",
     outcomes: [
@@ -138,7 +138,7 @@ export const PROJECTS: Project[] = [
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop"
     ],
     link: "https://portfolio.design",
-    github: "https://github.com/ermiyashenok/portfolio",
+    github: "https://github.com/T-Dot-c/portfolio",
     challenge: "Building a digital presence that balances technical competence with a stunning minimal experience.",
     solution: "Implemented a fully responsive portfolio with clean structure and modern web tech.",
     outcomes: ["Sub-second load times", "Responsive layout", "Glassmorphic theme"],
@@ -166,7 +166,7 @@ export const PROJECTS: Project[] = [
     description: "Real-world DevOps implementation including secure Ubuntu server hardening.",
     image: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?q=80&w=2574&auto=format&fit=crop",
     link: "https://cloud.zegaw.com",
-    github: "https://github.com/ermiyashenok/zegaw-cloud",
+    github: "https://github.com/T-Dot-c/zegaw-cloud",
     challenge: "Establishing a high-availability self-hosted cloud platform.",
     solution: "Deployed secure Ubuntu LTS instances hardened with custom firewalls.",
     outcomes: ["99.9% uptime", "Zero incidents"],
@@ -190,7 +190,7 @@ export const PROJECTS: Project[] = [
     description: "Enterprise Resource Planning system featuring complex relational capabilities.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
     link: "https://erp.portfolio.design",
-    github: "https://github.com/ermiyashenok/erp-system",
+    github: "https://github.com/T-Dot-c/erp-system",
     challenge: "Legacy ERP systems had highly fractured databases.",
     solution: "Architected a custom Odoo ERP implementation backed by PostgreSQL.",
     outcomes: ["30% speedup in daily operations"],
@@ -389,6 +389,35 @@ export const PROJECTS: Project[] = [
     engineeringProcess: [],
     uiPreview: undefined,
     sidebarStatusChips: []
+  },
+  {
+    id: "trh-construction",
+    title: "TRH Construction & Trading",
+    category: "Web Development",
+    tags: ["wordpress", "php", "tailwindcss"],
+    description: "A construction and trading company website built around six service areas and a photo-led project portfolio, designed to show the work with clarity and confidence.",
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?q=80&w=2670&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1541888946425-d0fbb18615f3?q=80&w=2670&auto=format&fit=crop"
+    ],
+    link: "https://trhconstruction.com",
+    github: "",
+    challenge: "Organizing multiple industrial service offerings and showcasing physical construction projects with visual clarity.",
+    solution: "Structured six dedicated service vertical sections alongside a responsive, photo-led gallery portfolio.",
+    outcomes: ["Clear service breakdown", "Fast project browsing", "Modern responsive layout"],
+    techStack: ["wordpress", "php", "tailwindcss"],
+    techRationale: {
+      wordpress: "Enables straightforward client content management and updates.",
+      tailwindcss: "Provides a responsive, high-performance visual layout."
+    },
+    timeline: "2026",
+    role: "Web Developer & Designer",
+    architectureModules: [],
+    detailedOutcomes: [],
+    keyBenefits: ["Photo-led project gallery", "Structured six service areas"],
+    technicalLogs: [],
+    engineeringProcess: ["Information Architecture", "Design Prototyping", "Development", "Deployment"],
+    sidebarStatusChips: ["Live", "Corporate", "Portfolio"]
   },
   {
     id: "web-infrastructure",
