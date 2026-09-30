@@ -86,7 +86,7 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta">
-            <a className="hero-btn main" href="#work">
+            <a className="hero-btn main" href="#demos">
               See my work
             </a>
             <a className="hero-btn" href="#contact">

@@ -18,7 +18,10 @@ import Contact from "./components/07_Contact";
 import Footer from "./components/08_Footer";
 import Blog from "./components/Blog";
 
-export default function App() {
+import { ThemeProvider, useTheme } from "./ThemeContext";
+
+function AppContent() {
+  const { BG, INK } = useTheme();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const [messages, setMessages] = useState<ContactMessage[]>([]);
@@ -59,7 +62,7 @@ export default function App() {
 
   // IntersectionObserver-based scroll spy — zero layout thrashing
   useEffect(() => {
-    const sections = ["hero", "about", "work", "services", "contact"];
+    const sections = ["hero", "about", "work", "demos", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sections.forEach((id) => {
@@ -110,7 +113,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-cream min-h-screen text-ink font-sans antialiased relative selection:bg-ember/20 selection:text-ink">
+    <div className="min-h-screen antialiased relative transition-colors duration-300" style={{ background: BG, color: INK, fontFamily: '"Figtree", system-ui, sans-serif' }}>
       {/* Main landing page content wrapper */}
       <div className="w-full flex flex-col">
         {/* Fixed Sticky Glassmorphic Header */}
@@ -139,12 +142,12 @@ export default function App() {
               <LiveDemos />
 
               {/* Work Section */}
-              <Work
+              {/* <Work
                 activeFilter={activeFilter}
                 setActiveFilter={setActiveFilter}
                 filteredProjects={filteredProjects}
                 onSelectProject={setSelectedProject}
-              />
+              /> */}
 
               {/* Specialties & Workflow Section */}
               <Specialties />
@@ -179,5 +182,13 @@ export default function App() {
         <Toast toasts={toasts} onClose={removeToast} />
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

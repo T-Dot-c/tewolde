@@ -3,6 +3,11 @@ import { Project } from "../types";
 import ProjectCard from "./09_ProjectCard";
 import { PROJECT_FILTERS } from "./ProjectsData";
 
+const INK = '#050507';
+const MUTE = '#71717a';
+const CHIP = '#f4f4f5';
+const CHIP_BORDER = 'rgba(5,5,7,0.08)';
+
 interface WorkProps {
   activeFilter: string;
   setActiveFilter: (filter: string) => void;
@@ -17,26 +22,49 @@ export default function Work({
   onSelectProject,
 }: WorkProps) {
   return (
-    <section className="py-24 md:py-32 px-6" id="work">
+    <section className="py-24 md:py-32 px-6" style={{ background: '#ffffff' }} id="work">
       <div className="max-w-[1200px] mx-auto space-y-12">
-        {/* Header with Project Categories Filter */}
-        <div className="border-t border-black pt-3 flex justify-between items-center mb-8">
-          <span className="text-[11px] font-extrabold tracking-[0.25em] text-black uppercase font-mono">
+        {/* Section Header */}
+        <div style={{ borderTop: `3px solid ${INK}`, paddingTop: 12 }} className="flex justify-between items-center mb-8">
+          <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: INK, textTransform: 'uppercase' }}>
             Portfolio
           </span>
-          <span className="text-[11px] font-extrabold text-black font-mono">02</span>
+          <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, color: INK }}>02</span>
         </div>
 
-        {/* Interactive Filters */}
+        {/* Filter Buttons */}
         <div className="flex flex-wrap gap-2.5">
           {PROJECT_FILTERS.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-lg font-label-sm text-xs uppercase tracking-wider transition-all duration-300 ${activeFilter === filter
-                  ? "bg-black text-white font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
-                  : "bg-black/5 text-zinc-600 border border-black/10 hover:border-black/25 hover:bg-black/10 hover:text-black"
-                }`}
+              style={{
+                fontFamily: '"Figtree", system-ui, sans-serif',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                padding: '8px 16px',
+                borderRadius: 8,
+                border: activeFilter === filter ? `2px solid ${INK}` : `2px solid ${CHIP_BORDER}`,
+                background: activeFilter === filter ? INK : CHIP,
+                color: activeFilter === filter ? '#ffffff' : MUTE,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: activeFilter === filter ? `3px 3px 0 ${INK}` : 'none',
+              }}
+              onMouseEnter={e => {
+                if (activeFilter !== filter) {
+                  e.currentTarget.style.borderColor = INK;
+                  e.currentTarget.style.color = INK;
+                }
+              }}
+              onMouseLeave={e => {
+                if (activeFilter !== filter) {
+                  e.currentTarget.style.borderColor = CHIP_BORDER;
+                  e.currentTarget.style.color = MUTE;
+                }
+              }}
             >
               {filter}
             </button>

@@ -1,263 +1,186 @@
+import React from "react";
 import { motion } from "framer-motion";
+
+const INK = 'var(--ink, #050507)';
+const MUTE = 'var(--muted, #71717a)';
+const BG = 'var(--bg, #ffffff)';
+const CHIP = 'var(--chip, #f4f4f5)';
+const BORDER = 'var(--line-faint, rgba(5,5,7,0.08))';
+const BORDER_SOLID = 'var(--line, rgba(5,5,7,0.12))';
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-20px" },
+  transition: { duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }
+};
 
 export default function About() {
   const frontendSkills = ["React", "JavaScript", "HTML5", "CSS3", "WordPress"];
   const backendSkills = ["Python", "Java", "C#", "C++"];
   const designSkills = ["Figma", "Wireframing", "UI/UX", "Prototyping"];
 
-  // Animations configuration
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-20px" },
-    transition: { duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }
+  const sectionStyle: React.CSSProperties = {
+    background: BG,
+    color: INK,
+    padding: 'clamp(48px, 8vw, 96px) clamp(24px, 5vw, 64px)',
+    borderTop: `1px solid ${BORDER}`,
   };
 
   return (
     <div id="about">
-      {/* ── Section 1: About Bio & Metadata (Cream Background) ───────────────── */}
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream text-ink relative">
+      {/* ── Section 1: Bio ── */}
+      <section style={sectionStyle}>
         <div className="max-w-[1200px] mx-auto space-y-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-            {/* Left Column */}
-            <motion.div 
-              {...fadeInUp}
-              className="lg:col-span-5 space-y-4"
-            >
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold">
+            {/* Left */}
+            <motion.div {...fadeInUp} className="lg:col-span-5 space-y-4">
+              <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block' }}>
                 ABOUT
               </span>
-              <h2 className="font-display text-5xl md:text-6xl font-extrabold tracking-tight text-ink leading-[1.1]">
+              <h2 style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.035em', color: INK, lineHeight: 1.05, margin: 0 }}>
                 A curious builder.
               </h2>
             </motion.div>
 
-            {/* Right Column */}
-            <motion.div 
-              {...fadeInUp}
-              transition={{ ...fadeInUp.transition, delay: 0.2 }}
-              className="lg:col-span-7 space-y-8 font-sans"
-            >
-              <p className="text-xl md:text-2xl text-ink/90 leading-relaxed font-light">
+            {/* Right */}
+            <motion.div {...fadeInUp} transition={{ ...fadeInUp.transition, delay: 0.2 }} className="lg:col-span-7 space-y-6">
+              <p style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 'clamp(1rem, 2vw, 1.35rem)', color: INK, lineHeight: 1.65, fontWeight: 400, margin: 0 }}>
                 I'm a graduated Computer Science professional with hands-on experience in web development. I'm passionate about building end-to-end products — from documentation to deployment — with a strong focus on user experience and scalable systems.
               </p>
-              <p className="text-xl md:text-2xl text-ink/90 leading-relaxed font-light">
+              <p style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 'clamp(1rem, 2vw, 1.35rem)', color: INK, lineHeight: 1.65, fontWeight: 400, margin: 0 }}>
                 I'm a collaborative team player who actively leverages AI tools to design, develop, and deliver impactful, business-driven solutions.
               </p>
             </motion.div>
           </div>
 
-          {/* Bottom Row: Metadata info */}
-          <motion.div 
-            {...fadeInUp}
-            transition={{ ...fadeInUp.transition, delay: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 border-t border-token-border"
+          {/* Metadata Row */}
+          <motion.div {...fadeInUp} transition={{ ...fadeInUp.transition, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            style={{ paddingTop: 40, borderTop: `1px solid ${BORDER}` }}
           >
-            <div>
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-2">
-                EDUCATION
-              </span>
-              <p className="font-display text-lg font-bold text-ink">
-                B.Sc. Computer Science
-              </p>
-              <p className="text-sm text-muted-foreground font-sans mt-0.5">
-                St. Mary's University
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-2">
-                BASED IN
-              </span>
-              <p className="font-display text-lg font-bold text-ink">
-                Addis Ababa
-              </p>
-              <p className="text-sm text-muted-foreground font-sans mt-0.5">
-                Ethiopia
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-2">
-                FOCUS
-              </span>
-              <p className="font-display text-lg font-bold text-ink">
-                Web Development
-              </p>
-              <p className="text-sm text-muted-foreground font-sans mt-0.5">
-                React & WordPress
-              </p>
-            </div>
+            {[
+              { label: 'EDUCATION', title: 'B.Sc. Computer Science', sub: "St. Mary's University" },
+              { label: 'BASED IN', title: 'Addis Ababa', sub: 'Ethiopia' },
+              { label: 'FOCUS', title: 'Web Development', sub: 'React & WordPress' },
+            ].map((item) => (
+              <div key={item.label}>
+                <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block', marginBottom: 8 }}>
+                  {item.label}
+                </span>
+                <p style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontSize: 18, fontWeight: 800, color: INK, margin: 0 }}>{item.title}</p>
+                <p style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 14, color: MUTE, margin: '4px 0 0' }}>{item.sub}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── Section 2: Toolkit: Skills & Tools (Cream Background) ─────────────── */}
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream text-ink border-t border-token-border relative">
+      {/* ── Section 2: Skills ── */}
+      <section style={sectionStyle}>
         <div className="max-w-[1200px] mx-auto space-y-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-            {/* Left Column */}
-            <motion.div 
-              {...fadeInUp}
-              className="lg:col-span-5 space-y-4"
-            >
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold">
+            {/* Left */}
+            <motion.div {...fadeInUp} className="lg:col-span-5 space-y-4">
+              <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block' }}>
                 TOOLKIT
               </span>
-              <h2 className="font-display text-5xl md:text-6xl font-extrabold tracking-tight text-ink leading-[1.1]">
-                Skills & tools.
+              <h2 style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.035em', color: INK, lineHeight: 1.05, margin: 0 }}>
+                Skills &amp; tools.
               </h2>
             </motion.div>
 
-            {/* Right Column (Skills items list) */}
-            <motion.div 
-              {...fadeInUp}
-              transition={{ ...fadeInUp.transition, delay: 0.2 }}
+            {/* Right — Skills columns */}
+            <motion.div {...fadeInUp} transition={{ ...fadeInUp.transition, delay: 0.2 }}
               className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-12"
             >
-              {/* Frontend Column */}
-              <div className="space-y-4">
-                <div className="border-t border-token-border pt-4">
-                  <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-6">
-                    FRONTEND
+              {[
+                { label: 'FRONTEND', items: frontendSkills },
+                { label: 'BACKEND', items: backendSkills },
+                { label: 'DESIGN', items: designSkills },
+              ].map((col) => (
+                <div key={col.label} style={{ paddingTop: 16, borderTop: `1px solid ${BORDER}` }}>
+                  <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block', marginBottom: 24 }}>
+                    {col.label}
                   </span>
                   <div className="space-y-3">
-                    {frontendSkills.map((skill) => (
+                    {col.items.map((skill) => (
                       <div key={skill} className="flex items-baseline justify-between select-none group">
-                        <span className="font-sans text-lg text-ink group-hover:translate-x-1 transition-transform duration-300">
-                          {skill}
-                        </span>
-                        <div className="flex-grow border-b border-dotted border-token-border mx-2 mb-1" />
-                        <span className="text-muted-foreground font-mono text-[10px]">.</span>
+                        <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 18, color: INK, transition: 'transform 0.2s' }}
+                          className="group-hover:translate-x-1">{skill}</span>
+                        <div style={{ flexGrow: 1, borderBottom: `1px dotted ${BORDER_SOLID}`, margin: '0 8px 4px' }} />
+                        <span style={{ color: MUTE, fontSize: 10 }}>.</span>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
-
-              {/* Backend Column */}
-              <div className="space-y-4">
-                <div className="border-t border-token-border pt-4">
-                  <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-6">
-                    BACKEND
-                  </span>
-                  <div className="space-y-3">
-                    {backendSkills.map((skill) => (
-                      <div key={skill} className="flex items-baseline justify-between select-none group">
-                        <span className="font-sans text-lg text-ink group-hover:translate-x-1 transition-transform duration-300">
-                          {skill}
-                        </span>
-                        <div className="flex-grow border-b border-dotted border-token-border mx-2 mb-1" />
-                        <span className="text-muted-foreground font-mono text-[10px]">.</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Design Column */}
-              <div className="space-y-4">
-                <div className="border-t border-token-border pt-4">
-                  <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-6">
-                    DESIGN
-                  </span>
-                  <div className="space-y-3">
-                    {designSkills.map((skill) => (
-                      <div key={skill} className="flex items-baseline justify-between select-none group">
-                        <span className="font-sans text-lg text-ink group-hover:translate-x-1 transition-transform duration-300">
-                          {skill}
-                        </span>
-                        <div className="flex-grow border-b border-dotted border-token-border mx-2 mb-1" />
-                        <span className="text-muted-foreground font-mono text-[10px]">.</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              ))}
             </motion.div>
           </div>
 
-          {/* Certifications Sub-Grid */}
-          <motion.div 
-            {...fadeInUp}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pt-6"
-          >
-            {/* Cert 1 */}
-            <div className="p-6 rounded-2xl border border-token-border bg-secondary-muted hover:shadow-md hover:border-token-border/90 transition-all duration-300">
-              <span className="text-[10px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-3">
-                CERTIFICATION
-              </span>
-              <h3 className="font-display text-lg md:text-xl font-bold text-ink">
-                Responsive Web Design
-              </h3>
-              <p className="text-xs font-sans tracking-wide text-muted-foreground uppercase mt-2">
-                FreeCodeCamp <span className="opacity-40">·</span> ~300 hours
-              </p>
-            </div>
-
-            {/* Cert 2 */}
-            <div className="p-6 rounded-2xl border border-token-border bg-secondary-muted hover:shadow-md hover:border-token-border/90 transition-all duration-300">
-              <span className="text-[10px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold mb-3">
-                CERTIFICATION
-              </span>
-              <h3 className="font-display text-lg md:text-xl font-bold text-ink">
-                Foundations of Project Management
-              </h3>
-              <p className="text-xs font-sans tracking-wide text-muted-foreground uppercase mt-2">
-                Google <span className="opacity-40">·</span> Coursera
-              </p>
-            </div>
+          {/* Certifications */}
+          <motion.div {...fadeInUp} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pt-6">
+            {[
+              { title: 'Responsive Web Design', sub: 'FreeCodeCamp · ~300 hours' },
+              { title: 'Foundations of Project Management', sub: 'Google · Coursera' },
+            ].map((cert) => (
+              <div key={cert.title}
+                style={{ padding: 24, borderRadius: 14, border: `2px solid ${BORDER}`, background: CHIP, transition: 'box-shadow 0.2s, border-color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = INK; e.currentTarget.style.boxShadow = `4px 4px 0 ${INK}`; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.boxShadow = 'none'; }}
+              >
+                <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block', marginBottom: 12 }}>
+                  CERTIFICATION
+                </span>
+                <h3 style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontSize: 20, fontWeight: 800, color: INK, margin: 0 }}>{cert.title}</h3>
+                <p style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 12, color: MUTE, margin: '8px 0 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{cert.sub}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── Section 3: Experience: In the field (Cream Background, Ink Foreground) ─── */}
-      <section className="py-24 md:py-32 px-6 md:px-12 bg-cream text-ink border-t border-token-border relative">
+      {/* ── Section 3: Experience ── */}
+      <section style={sectionStyle}>
         <div className="max-w-[1200px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-            {/* Left Column */}
-            <motion.div 
-              {...fadeInUp}
-              className="lg:col-span-5 space-y-4"
-            >
-              <span className="text-[11px] font-mono tracking-[0.25em] text-muted-foreground uppercase block font-semibold">
+            {/* Left */}
+            <motion.div {...fadeInUp} className="lg:col-span-5 space-y-4">
+              <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', color: MUTE, textTransform: 'uppercase', display: 'block' }}>
                 EXPERIENCE
               </span>
-              <h2 className="font-display text-5xl md:text-6xl font-extrabold tracking-tight text-ink leading-[1.1]">
+              <h2 style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.035em', color: INK, lineHeight: 1.05, margin: 0 }}>
                 In the field.
               </h2>
             </motion.div>
 
-            {/* Right Column */}
-            <motion.div 
-              {...fadeInUp}
-              transition={{ ...fadeInUp.transition, delay: 0.2 }}
-              className="lg:col-span-7 space-y-8"
-            >
-              <div className="border-t border-token-border pt-6">
-                {/* Job Title Header Block */}
+            {/* Right */}
+            <motion.div {...fadeInUp} transition={{ ...fadeInUp.transition, delay: 0.2 }} className="lg:col-span-7 space-y-8">
+              <div style={{ paddingTop: 24, borderTop: `1px solid ${BORDER}` }}>
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
                   <div>
-                    <h3 className="font-display text-2xl font-bold text-ink leading-tight">
-                      Zegaw Cloud
-                    </h3>
-                    <p className="text-sm font-sans tracking-wide text-muted-foreground mt-1 uppercase font-semibold">
+                    <div className="inline-block p-1 rounded-md bg-white/95 dark:bg-white/90 mb-2">
+                      <img
+                        src="https://zergaw.com/wp-content/uploads/2023/10/blue-by-black@4x.png"
+                        alt="Zergaw Cloud"
+                        style={{ height: 32, width: 'auto', display: 'block', objectFit: 'contain' }}
+                      />
+                    </div>
+                    <p style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 13, color: MUTE, margin: '4px 0 0', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
                       Web Infrastructure & Cloud Services
                     </p>
                   </div>
-                  <span className="font-sans text-muted-foreground text-md sm:text-lg italic mt-1 sm:mt-0 font-medium">
-                    Intern
-                  </span>
                 </div>
-
-                {/* Bullets */}
-                <ul className="space-y-4 mt-8 text-ink/90 font-sans text-[15px] sm:text-base leading-relaxed">
-                  <li className="flex items-start gap-3">
-                    <span className="text-muted-foreground/60 font-semibold shrink-0">—</span>
-                    <span>Gained hands-on experience in real-world client project lifecycles.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-muted-foreground/60 font-semibold shrink-0">—</span>
-                    <span>Performed WordPress site cloning and developed custom plugins and child themes.</span>
-                  </li>
+                <ul style={{ margin: '32px 0 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  {[
+                    'Gained hands-on experience in real-world client project lifecycles.',
+                    'Performed WordPress site cloning and developed custom plugins and child themes.',
+                  ].map((bullet) => (
+                    <li key={bullet} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                      <span style={{ color: MUTE, fontWeight: 600, flexShrink: 0 }}>—</span>
+                      <span style={{ fontFamily: '"Figtree", system-ui, sans-serif', fontSize: 15, color: INK, lineHeight: 1.65 }}>{bullet}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </motion.div>
