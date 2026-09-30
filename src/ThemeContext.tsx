@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 
 export interface ThemeColors {
   BG: string;
@@ -13,8 +13,8 @@ export interface ThemeColors {
   NAV_BG: string;
   NAV_BORDER: string;
   isDark: boolean;
-  toggle: () => void;
-  setDark: (val: boolean) => void;
+  toggle: (e?: React.MouseEvent) => void;
+  setDark: (val: boolean, e?: React.MouseEvent) => void;
 }
 
 const LIGHT: Omit<ThemeColors, "isDark" | "toggle" | "setDark"> = {
@@ -61,6 +61,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   });
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
@@ -70,10 +72,45 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.removeAttribute("data-theme");
       localStorage.setItem("theme", "light");
     }
+
+    const favicon = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
+    if (favicon) {
+      favicon.href = isDark ? "/favicon-dark-02.svg" : "/favicon-02.svg";
+    }
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // Trigger slow, cinematic sunset / sunrise atmospheric light bloom
+    const transitionType = isDark ? "sunset" : "sunrise";
+    root.setAttribute("data-theme-transition", transitionType);
+    const timer = setTimeout(() => {
+      root.removeAttribute("data-theme-transition");
+    }, 1600);
+
+    return () => clearTimeout(timer);
   }, [isDark]);
 
-  const toggle = () => setIsDark((v) => !v);
-  const setDark = (val: boolean) => setIsDark(val);
+  const setDark = (val: boolean, e?: React.MouseEvent) => {
+    if (val === isDark) return;
+
+    if (e && e.currentTarget) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      document.documentElement.style.setProperty("--theme-origin-x", `${Math.round(x)}px`);
+      document.documentElement.style.setProperty("--theme-origin-y", `${Math.round(y)}px`);
+    } else if (e) {
+      document.documentElement.style.setProperty("--theme-origin-x", `${e.clientX}px`);
+      document.documentElement.style.setProperty("--theme-origin-y", `${e.clientY}px`);
+    }
+
+    setIsDark(val);
+  };
+
+  const toggle = (e?: React.MouseEvent) => setDark(!isDark, e);
   const colors = isDark ? DARK : LIGHT;
 
   return (

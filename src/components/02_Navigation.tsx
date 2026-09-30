@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ArrowRight, Sun, Moon } from "lucide-react";
 import { useTheme } from "../ThemeContext";
 
@@ -10,7 +10,24 @@ interface NavigationProps {
 }
 
 export default function Navigation({ isScrolled, activeSection, onBlogClick, isBlogOpen }: NavigationProps) {
-  const { isDark, setDark, INK, MUTE, ACCENT, ACCENT_INK, CARD, NAV_BORDER } = useTheme();
+  const { isDark, setDark, INK, MUTE, ACCENT, ACCENT_INK, CHIP, NAV_BORDER } = useTheme();
+  const [isArrowHovered, setIsArrowHovered] = useState(false);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [textWidth, setTextWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (textRef.current) {
+        setTextWidth(textRef.current.getBoundingClientRect().width);
+      }
+    };
+    updateWidth();
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(updateWidth);
+    }
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   const navLinkStyle = (section: string) => ({
     fontFamily: '"Figtree", system-ui, sans-serif',
@@ -36,17 +53,59 @@ export default function Navigation({ isScrolled, activeSection, onBlogClick, isB
     transition: 'color 0.15s',
   };
 
+  const arrowOffset = isArrowHovered ? (textWidth ? textWidth + 24 : 92) : 0;
+
   return (
     <nav className={`fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300 ${isScrolled
       ? "glass-nav"
       : "bg-transparent border-b border-transparent"
       }`}>
       <div className="max-w-[1200px] mx-auto flex items-center justify-between">
-        {/* Left Side — Brand */}
-        <div className="flex items-center gap-2">
-          <ArrowRight className="w-3.5 h-3.5 animate-pulse" style={{ color: ACCENT }} />
-          <span style={{ fontFamily: '"Bricolage Grotesque", Figtree, sans-serif', fontWeight: 800, fontSize: 14, color: INK, letterSpacing: '-0.01em' }}>
+        {/* Left Side — Brand with gliding arrow animation */}
+        <div
+          className="flex items-center gap-2 cursor-pointer select-none group"
+          onMouseEnter={() => setIsArrowHovered(true)}
+          onMouseLeave={() => setIsArrowHovered(false)}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          title="Tewolde"
+        >
+          <div
+            className="flex items-center justify-center p-1 -m-1 z-10"
+            style={{
+              transform: `translateX(${arrowOffset}px)`,
+              transition: "transform 0.38s cubic-bezier(0.25, 1, 0.5, 1)",
+            }}
+            aria-label="Brand logo arrow"
+          >
+            <ArrowRight
+              className={`w-3.5 h-3.5 transition-opacity duration-200 ${isArrowHovered ? "" : "animate-pulse"}`}
+              style={{ color: ACCENT }}
+            />
+          </div>
+          <span
+            ref={textRef}
+            className="relative inline-block"
+            style={{
+              fontFamily: '"Bricolage Grotesque", Figtree, sans-serif',
+              fontWeight: 800,
+              fontSize: 14,
+              color: INK,
+              letterSpacing: '-0.01em',
+            }}
+          >
             Tewolde.
+            {/* Animated horizontal strikethrough line pulled by the gliding arrow */}
+            <span
+              aria-hidden="true"
+              className="absolute left-0 pointer-events-none"
+              style={{
+                top: '52%',
+                height: '1.5px',
+                width: isArrowHovered ? '100%' : '0%',
+                backgroundColor: INK,
+                transition: 'width 0.38s cubic-bezier(0.25, 1, 0.5, 1)',
+              }}
+            />
           </span>
         </div>
 
@@ -93,46 +152,53 @@ export default function Navigation({ isScrolled, activeSection, onBlogClick, isB
             onMouseLeave={e => { if (activeSection !== 'contact') e.currentTarget.style.color = MUTE; }}
           >Contact</a>
 
-          {/* Theme Switcher — Filter Section Style (Icon Only) */}
-          <div
-            role="group"
-            aria-label="Color theme switcher"
-            className="inline-flex items-center rounded-full overflow-hidden"
-            style={{
-              border: `1.5px solid ${INK}`,
-              background: CARD,
-              padding: 2,
-            }}
-          >
+          {/* Separator matching center links */}
+          <span style={{ color: NAV_BORDER, fontWeight: 400 }} aria-hidden="true">/</span>
+
+          {/* Theme Switcher — Seamlessly aligned in size & position with nav items */}
+          <div className="flex items-center gap-3">
             <button
               type="button"
               aria-label="Switch to light mode"
               aria-pressed={!isDark}
-              onClick={() => setDark(false)}
-              className="p-1.5 rounded-full transition-all duration-200 flex items-center justify-center cursor-pointer"
+              onClick={(e) => setDark(false, e)}
+              className="flex items-center justify-center cursor-pointer transition-all duration-300"
               style={{
-                background: !isDark ? INK : "transparent",
-                color: !isDark ? "#ffffff" : MUTE,
-                border: 0,
+                color: !isDark ? INK : MUTE,
+                borderBottom: !isDark ? `1.5px solid ${INK}` : '1.5px solid transparent',
+                paddingBottom: 2,
+                background: 'transparent',
+                borderTop: 0,
+                borderLeft: 0,
+                borderRight: 0,
               }}
+              onMouseEnter={e => { if (isDark) e.currentTarget.style.color = INK; }}
+              onMouseLeave={e => { if (isDark) e.currentTarget.style.color = MUTE; }}
               title="Light mode"
             >
-              <Sun className="w-3.5 h-3.5" />
+              <Sun className={`w-3.5 h-3.5 transition-transform duration-500 ${!isDark ? 'scale-110' : 'scale-95 opacity-50'}`} />
             </button>
             <button
               type="button"
               aria-label="Switch to dark mode"
               aria-pressed={isDark}
-              onClick={() => setDark(true)}
-              className="p-1.5 rounded-full transition-all duration-200 flex items-center justify-center cursor-pointer"
+              onClick={(e) => setDark(true, e)}
+              className="flex items-center justify-center cursor-pointer transition-all duration-300"
               style={{
-                background: isDark ? ACCENT : "transparent",
-                color: isDark ? ACCENT_INK : MUTE,
-                border: 0,
+                color: isDark ? ACCENT : MUTE,
+                borderBottom: isDark ? `1.5px solid ${ACCENT}` : '1.5px solid transparent',
+                paddingBottom: 2,
+                background: 'transparent',
+                borderTop: 0,
+                borderLeft: 0,
+                borderRight: 0,
+                filter: isDark ? 'drop-shadow(0 0 5px rgba(63, 181, 159, 0.65))' : 'none',
               }}
+              onMouseEnter={e => { if (!isDark) e.currentTarget.style.color = INK; }}
+              onMouseLeave={e => { if (!isDark) e.currentTarget.style.color = MUTE; }}
               title="Dark mode"
             >
-              <Moon className="w-3.5 h-3.5" />
+              <Moon className={`w-3.5 h-3.5 transition-transform duration-500 ${isDark ? 'scale-110' : 'scale-95 opacity-50'}`} />
             </button>
           </div>
         </div>
