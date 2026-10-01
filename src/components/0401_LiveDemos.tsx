@@ -29,10 +29,26 @@ const TECH_ICON: Record<string, string> = {
   TypeScript: "typescript",
   Vercel: "vercel",
   Supabase: "supabase",
+  Astro: "astro",
 };
 
 
 const DEMO_PROJECTS: ProjectDemo[] = [
+  {
+    id: "biniyam",
+    type: "Website",
+    title: "Biniyam Tiku",
+    line: "Architectural studio & portfolio website",
+    url: "biniyam-tiku.vercel.app",
+    embedUrl: "https://biniyam-tiku.vercel.app/",
+    stack: [
+      { name: "Astro", icon: "astro" },
+      { name: "Tailwind", icon: "tailwind" },
+      { name: "TypeScript", icon: "typescript" },
+      { name: "Vercel", icon: "vercel" },
+    ],
+    color: "#d97706",
+  },
   {
     id: "derm",
     type: "Website",

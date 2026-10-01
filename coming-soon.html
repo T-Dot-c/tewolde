@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <title>Shipping soon – Tewolde</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+    <style>
+        :root {
+            --bg: #131816;
+            --ink: #eef1ef;
+            --mute: #9aa5a0;
+            --blue: #3fb59f;
+            --sun: #3fb59f;
+            --card: #1b2320;
+            --line: #2b3431;
+            --err: #ff8a80;
+            --up: #5fd28a;
+            --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 400 17px/1.6 Figtree, system-ui, sans-serif;
+            min-height: 100svh;
+            overflow-x: hidden;
+            background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 44px 44px;
+            background-position: -1px -1px;
+            -webkit-mask-image: none;
+            mask-image: none;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(70% 60% at 30% 40%, transparent, var(--bg) 85%);
+            pointer-events: none
+        }
+
+        button,
+        input {
+            font: inherit;
+            color: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--sun);
+            outline-offset: 3px
+        }
+
+        .top,
+        .grid {
+            position: relative;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding-left: clamp(18px, 4vw, 40px);
+            padding-right: clamp(18px, 4vw, 40px)
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: calc(22px + env(safe-area-inset-top, 0px))
+        }
+
+        .logo {
+            font: 600 17px var(--mono);
+            color: var(--ink)
+        }
+
+        .logo b {
+            color: var(--sun)
+        }
+
+
+
+        .grid {
+            display: grid;
+            gap: clamp(30px, 5vw, 64px);
+            padding-top: clamp(28px, 6vw, 70px);
+            padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px))
+        }
+
+        @media(min-width:960px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+                min-height: calc(100svh - 80px)
+            }
+        }
+
+        h1 {
+            font: 800 clamp(2.6rem, 6vw, 4.8rem)/.98 "Bricolage Grotesque", Figtree, sans-serif;
+            letter-spacing: -.035em;
+            margin: 0 0 20px
+        }
+
+        h1 span {
+            background: linear-gradient(transparent 62%, #3fb59f44 62% 92%, transparent 92%)
+        }
+
+        .lead {
+            color: #b8c4bf;
+            margin: 0 0 24px;
+            max-width: 46ch
+        }
+
+        .soc {
+            display: flex;
+            gap: 12px;
+            margin: 0 0 24px;
+            padding: 0;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .soc a {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--card);
+            border: 2px solid var(--line);
+            color: var(--ink);
+            text-decoration: none;
+            transition: transform .15s, background .15s, border-color .15s, color .15s, box-shadow .15s
+        }
+
+        .soc a:hover {
+            background: var(--sun);
+            border-color: var(--sun);
+            color: #0b1210;
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--ink)
+        }
+
+        .soc svg {
+            width: 22px;
+            height: 22px
+        }
+
+        form.nt {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 500px
+        }
+
+        .cmd {
+            flex: 1;
+            min-width: 220px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card);
+            border: 2px solid var(--line);
+            border-radius: 10px;
+            padding: 0 14px;
+            font-family: var(--mono)
+        }
+
+        .cmd:focus-within {
+            border-color: var(--sun);
+            box-shadow: 0 0 0 3px #f3d24a44
+        }
+
+        .cmd b {
+            color: var(--sun)
+        }
+
+        .cmd input {
+            flex: 1;
+            min-width: 0;
+            background: none;
+            border: 0;
+            padding: 14px 0;
+            outline: none;
+            font-family: var(--mono);
+            font-size: 15px
+        }
+
+        .cmd input::placeholder {
+            color: #77827d
+        }
+
+        .cmd[data-bad=true] {
+            border-color: var(--err)
+        }
+
+        .go {
+            background: var(--sun);
+            color: #0b1210;
+            border: 2px solid var(--sun);
+            border-radius: 10px;
+            padding: 13px 22px;
+            font: 600 14px var(--mono);
+            transition: transform .15s, box-shadow .15s
+        }
+
+        .go:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--ink)
+        }
+
+        .msg {
+            flex-basis: 100%;
+            margin: 2px 4px 0;
+            font-size: 14px;
+            min-height: 22px;
+            color: var(--mute)
+        }
+
+        .msg.er {
+            color: var(--err)
+        }
+
+        .msg.ok {
+            color: var(--up)
+        }
+
+
+
+
+        /* terminal */
+        .term {
+            background: #111815;
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 10px 10px 0 #3fb59f33;
+            overflow: hidden;
+            font-family: var(--mono);
+            font-size: 14px
+        }
+
+        .tb {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--line);
+            color: var(--mute);
+            font-size: 12px
+        }
+
+        .tb i {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 2px solid var(--line)
+        }
+
+        .tb span {
+            margin-left: 8px
+        }
+
+        .prog {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 16px 0;
+            color: var(--mute)
+        }
+
+        .pb {
+            flex: 1;
+            height: 10px;
+            border: 2px solid var(--line);
+            border-radius: 99px;
+            overflow: hidden
+        }
+
+        .pb i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--sun);
+            transition: width .6s
+        }
+
+        #out {
+            height: 300px;
+            overflow: auto;
+            padding: 14px 16px;
+            line-height: 1.75
+        }
+
+        .ln b {
+            color: var(--sun)
+        }
+
+        .ln u {
+            text-decoration: none;
+            color: var(--blue)
+        }
+
+        .ln .ic {
+            display: inline-block;
+            width: 1.6em;
+            color: var(--mute)
+        }
+
+        .ln.done .ic {
+            color: var(--up)
+        }
+
+        .ln.run .ic {
+            color: var(--sun);
+            animation: spin 1.2s linear infinite
+        }
+
+        .ln .st {
+            float: right;
+            color: var(--mute);
+            font-size: 12px
+        }
+
+        .ln.done .st {
+            color: var(--up)
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .tf {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            border-top: 2px solid var(--line);
+            padding: 0 16px
+        }
+
+        .tf b {
+            color: var(--sun)
+        }
+
+        .tf input {
+            flex: 1;
+            min-width: 0;
+            background: none;
+            border: 0;
+            outline: none;
+            padding: 13px 0;
+            font: inherit;
+            color: var(--ink)
+        }
+
+        .tf:focus-within {
+            background: #161f1d
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top"><span class="logo"><b>~/</b>tewolde</span></header>
+
+    <main class="grid">
+        <section>
+            <h1>Currently building. <span>Shipping soon.</span></h1>
+            <p class="lead">I'm Tewolde, a software engineer. My new portfolio, with my websites, web apps and SaaS
+                projects, is in the final stretch. Get one email when it deploys.</p>
+
+            <ul class="soc" aria-label="Social media">
+                <li>
+                    <a href="https://github.com/T-Dot-c" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+                        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:tewolde.m50@gmail.com" aria-label="Email" title="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X" title="X">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </li>
+            </ul>
+
+            <form class="nt" id="f" novalidate>
+                <label class="cmd" id="cmd"><b aria-hidden="true">$ notify</b><span
+                        style="position:absolute;left:-9999px">Email address</span><input id="em" type="email"
+                        placeholder="you@example.com" autocomplete="email" aria-describedby="msg"></label>
+                <button class="go" type="submit">notify me</button>
+                <p class="msg" id="msg" role="status"></p>
+            </form>
+
+
+        </section>
+
+        <section class="term" aria-label="Build terminal">
+            <div class="tb"><i></i><i></i><i></i><span>tewolde — build</span></div>
+            <div class="prog"><span>build</span>
+                <div class="pb"><i id="pf"></i></div><span id="pt">0%</span>
+            </div>
+            <div id="out" aria-live="off" tabindex="0"></div>
+            <form class="tf" id="tf" hidden><b aria-hidden="true">$</b><label for="ti"
+                    style="position:absolute;left:-9999px">Terminal command</label><input id="ti" autocomplete="off"
+                    autocapitalize="off" spellcheck="false" placeholder="type help"></form>
+        </section>
+    </main>
+
+    <script>
+        const $ = id => document.getElementById(id), RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+        /* ---- edit these ---- */
+        const LAUNCH = new Date('2026-11-15T09:00:00');
+        const TO = 'tewolde.m50@gmail.com';
+        const STEPS = [['design system', 'done'], ['pages and demos', 'done'], ['contact and notify form', 'done'], ['case studies', 'run'], ['deploy to production', 'todo']];
+
+        const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const out = $('out');
+        function line(h, c) { const d = document.createElement('div'); d.className = 'ln ' + (c || ''); d.innerHTML = h; out.append(d); out.scrollTop = out.scrollHeight; return d }
+
+        /* build sequence */
+        let done = 0, t = 0; const at = fn => setTimeout(fn, RM ? 0 : (t += 420));
+        const setProg = () => { const p = Math.round(done / STEPS.length * 100); $('pf').style.width = p + '%'; $('pt').textContent = p + '%' };
+        at(() => line('<b>$</b> git checkout main'));
+        at(() => line('<b>$</b> npm run build'));
+        STEPS.forEach(([n, st]) => at(() => {
+            line(`<span class="ic">${st === 'done' ? '✓' : st === 'run' ? '◐' : '○'}</span>${n}<span class="st">${st === 'done' ? 'done' : st === 'run' ? 'in progress' : 'pending'}</span>`, st);
+            if (st === 'done') { done++; setProg() }
+        }));
+        at(() => { line('Type <u>help</u> to look around.'); $('tf').hidden = false });
+
+        /* mini terminal */
+        const CMD = {
+            help: () => 'whoami · stack · status · contact · clear',
+            whoami: () => 'Tewolde, software engineer. Websites, web apps and SaaS.',
+            stack: () => 'React, TypeScript, Vite, Tailwind CSS',
+            status: () => `${done} of ${STEPS.length} steps done. Launching soon.`,
+            contact: () => TO,
+            clear: () => { out.innerHTML = ''; return '' }
+        };
+        $('tf').onsubmit = e => {
+            e.preventDefault(); const v = $('ti').value.trim(); $('ti').value = ''; if (!v) return;
+            line(`<b>$</b> ${esc(v)}`); const f = CMD[v.toLowerCase()];
+            const r = f ? f() : `command not found: ${esc(v)}. Try help.`; if (r) line(esc(r))
+        };
+        out.addEventListener('click', () => $('ti').focus());
+
+        /* notify form: opens the visitor's email app */
+        $('f').onsubmit = e => {
+            e.preventDefault(); const v = $('em').value.trim(), ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+            $('cmd').dataset.bad = !ok;
+            if (!ok) { $('msg').className = 'msg er'; $('msg').textContent = 'Enter an email like name@example.com.'; $('em').focus(); return }
+            $('msg').className = 'msg ok'; $('msg').textContent = 'Your email app should open. Press send and I will add you to the list.';
+            location.href = `mailto:${TO}?subject=${encodeURIComponent('Notify me when the site launches')}&body=${encodeURIComponent('Please email me when your new site is live.\n\n' + v)}`
+        };
+    </script>
+</body>
+
+</html>

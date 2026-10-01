@@ -488,7 +488,7 @@ export default function Hero() {
                           <button
                             key={p.id}
                             type="button"
-                            onPointerDown={(e) => handleDragStart(e, { type: "plan", id: p.id, name: p.n || p.name, price: p.price, desc: p.desc })}
+                            onPointerDown={(e) => handleDragStart(e, { type: "plan", id: p.id, name: p.name, price: p.price, desc: p.desc })}
                             onPointerMove={handleDragMove}
                             onPointerUp={handleDragEnd}
                             onPointerCancel={handleDragEnd}
